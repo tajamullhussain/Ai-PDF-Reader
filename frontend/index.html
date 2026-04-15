@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Law AI Pro | Advanced Document Intelligence</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class="fas fa-gavel"></i>
+                <span>PDF Law AI Pro</span>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <!-- User Profile (if authenticated) -->
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <img src="https://ui-avatars.com/api/?background=667eea&color=fff" alt="Avatar">
+                <div class="user-info">
+                    <p class="user-name" id="userName">Guest User</p>
+                    <p class="user-email" id="userEmail">guest@example.com</p>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+            
+            <!-- Multi-Document Manager -->
+            <div class="documents-manager">
+                <div class="section-header">
+                    <h3><i class="fas fa-file-alt"></i> Documents</h3>
+                    <button class="add-doc-btn" id="addDocBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                
+                <div class="documents-list" id="documentsList">
+                    <!-- Dynamic documents will appear here -->
+                </div>
+            </div>
+            
+            <!-- Enhanced Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & Drop PDFs here</p>
+                <span>or</span>
+                <button class="upload-btn" id="uploadBtn">
+                    <i class="fas fa-folder-open"></i> Browse Files
+                </button>
+                <input type="file" id="fileInput" accept=".pdf" multiple hidden>
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar"></div>
+                    <span class="progress-text">0%</span>
+                </div>
+                <p class="file-limit">Max 50MB per file • Up to 10 files</p>
+            </div>
+            
+            <!-- Chat History -->
+            <div class="chat-history">
+                <div class="section-header">
+                    <h3><i class="fas fa-history"></i> Chat History</h3>
+                    <button class="clear-history-btn" id="clearHistoryBtn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <!-- Previous conversations -->
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Connected</span>
+                </div>
+                <button class="export-chat-btn" id="exportChatBtn">
+                    <i class="fas fa-download"></i> Export Chat
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <div class="chat-header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1>Document Intelligence</h1>
+                        <p>Advanced RAG with citations • Multi-document support</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="voice-input-btn" id="voiceInputBtn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="compare-docs-btn" id="compareDocsBtn">
+                        <i class="fas fa-code-branch"></i> Compare
+                    </button>
+                    <button class="settings-btn" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Active Documents Tags -->
+            <div class="active-docs-tags" id="activeDocsTags">
+                <!-- Active documents will appear as tags -->
+            </div>
+            
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-message" id="welcomeMessage">
+                    <div class="welcome-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2>Welcome to PDF Law AI Pro</h2>
+                    <p>Advanced AI-powered document analysis with multi-document support</p>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Multi-Document</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-code-branch"></i>
+                            <span>Compare Docs</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-microphone"></i>
+                            <span>Voice Input</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages"></div>
+            </div>
+            
+            <!-- Enhanced Input Area -->
+            <div class="input-container">
+                <div class="input-toolbar">
+                    <button class="toolbar-btn" id="attachDocBtn" title="Attach document">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button class="toolbar-btn" id="useTemplateBtn" title="Use template">
+                        <i class="fas fa-file-alt"></i>
+                    </button>
+                    <div class="model-selector">
+                        <select id="modelSelect">
+                            <option value="mistral">Mistral (Default)</option>
+                            <option value="llama2">Llama 2</option>
+                            <option value="phi">Phi-2 (Fast)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="input-wrapper">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Ask anything about your documents... (Press Enter to send, Shift+Enter for new line)"
+                        rows="1"
+                        disabled
+                    ></textarea>
+                    <button class="send-btn" id="sendBtn" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+                <div class="input-footer">
+                    <span class="token-count" id="tokenCount">0 tokens</span>
+                    <span class="context-info" id="contextInfo">No active document</span>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Compare Panel (Hidden by default) -->
+        <div class="compare-panel" id="comparePanel" style="display: none;">
+            <div class="compare-header">
+                <h3>Document Comparison</h3>
+                <button class="close-compare" id="closeCompareBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="compare-content">
+                <div class="compare-doc">
+                    <select id="compareDoc1">
+                        <option value="">Select Document A</option>
+                    </select>
+                    <div class="compare-result" id="compareResult1"></div>
+                </div>
+                <div class="compare-doc">
+                    <select id="compareDoc2">
+                        <option value="">Select Document B</option>
+                    </select>
+                    <div class="compare-result" id="compareResult2"></div>
+                </div>
+            </div>
+            <button class="analyze-diff-btn" id="analyzeDiffBtn">
+                <i class="fas fa-chart-line"></i> Analyze Differences
+            </button>
+        </div>
+    </div>
+    
+    <!-- Voice Modal -->
+    <div class="modal" id="voiceModal" style="display: none;">
+        <div class="modal-content">
+            <div class="voice-recorder">
+                <div class="voice-wave">
+                    <canvas id="voiceCanvas"></canvas>
+                </div>
+                <p class="voice-status" id="voiceStatus">Click to start recording</p>
+                <button class="start-recording" id="startRecordingBtn">
+                    <i class="fas fa-circle"></i> Start Recording
+                </button>
+                <button class="stop-recording" id="stopRecordingBtn" style="display: none;">
+                    <i class="fas fa-stop"></i> Stop
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/voice.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
